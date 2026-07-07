@@ -1,0 +1,129 @@
+@media (max-width: 1024px) {
+  .header-inner {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .nav-actions {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 16px;
+    display: none;
+    width: min(300px, calc(100vw - 32px));
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+  }
+
+  .nav-actions.is-open {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+  }
+
+  .menu-toggle {
+    display: inline-grid;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 760px) {
+  .container {
+    width: min(calc(100% - 24px), var(--container));
+  }
+
+  .header-inner {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    min-height: 74px;
+    padding: 10px 0;
+  }
+
+  .brand-copy {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 48px;
+    height: 48px;
+    font-size: 30px;
+  }
+
+  .search-form {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 52px;
+    grid-template-columns: 1fr 54px;
+  }
+
+  .hero-title-inner {
+    min-height: 178px;
+  }
+
+  .section-heading {
+    display: grid;
+    gap: 10px;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .product-content h3 {
+    min-height: auto;
+  }
+
+  .pagination {
+    gap: 28px;
+    font-size: 1.15rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .site-footer {
+    border-top-width: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-actions.is-open {
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+
+  .hero-title h1 {
+    font-size: 2rem;
+  }
+
+  .product-section {
+    padding-top: 30px;
+  }
+
+  .product-content {
+    padding-inline: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
