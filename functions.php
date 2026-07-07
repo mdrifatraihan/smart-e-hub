@@ -137,6 +137,48 @@ function my_custom_theme_customizer( $wp_customize ) {
         'type'     => 'url',
     ) );
 
+    // --- Hero Text Section ---
+    $wp_customize->add_section( 'hero_text_section', array(
+        'title'    => 'Hero Section Texts',
+        'priority' => 35,
+    ) );
+
+    // ১. বড় হেডিং টেক্সট
+    $wp_customize->add_setting( 'hero_main_title', array('default' => 'আপনার জন্য সব ডিজিটাল প্রোডাক্ট এক জায়গায়।') );
+    $wp_customize->add_control( 'hero_main_title', array(
+        'label'    => 'Main Heading',
+        'section'  => 'hero_text_section',
+        'type'     => 'text',
+    ) );
+
+    // ২. ছোট সাব-টেক্সট
+    $wp_customize->add_setting( 'hero_sub_title', array('default' => 'Digital E Product BD - Buy Premium Digital Products BD at Low Price in Bangladesh') );
+    $wp_customize->add_control( 'hero_sub_title', array(
+        'label'    => 'Sub Heading',
+        'section'  => 'hero_text_section',
+        'type'     => 'text',
+    ) );
+
+    // ফন্ট সাইজ সেটিংস
+    $wp_customize->add_setting( 'hero_font_size', array('default' => '24px') );
+    $wp_customize->add_control( 'hero_font_size', array(
+        'label'    => 'Main Title Font Size',
+        'section'  => 'hero_text_section',
+        'type'     => 'text',
+    ) );
+
+    // হেডিং কালার
+    $wp_customize->add_setting( 'hero_h2_color', array('default' => '#333333') );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'hero_h2_color', array('label' => 'Heading Color', 'section' => 'hero_text_section') ) );
+
+    // সাব-হেডিং কালার
+    $wp_customize->add_setting( 'hero_p_color', array('default' => '#666666') );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'hero_p_color', array('label' => 'Sub-heading Color', 'section' => 'hero_text_section') ) );
+
+    // সাব-হেডিং ফন্ট সাইজ
+    $wp_customize->add_setting( 'hero_p_font_size', array('default' => '16px') );
+    $wp_customize->add_control( 'hero_p_font_size', array('label' => 'Sub-heading Font Size', 'section' => 'hero_text_section', 'type' => 'text') );
+
 }
 add_action( 'customize_register', 'my_custom_theme_customizer' );
 ?>

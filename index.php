@@ -171,11 +171,15 @@ Template Name: Custom Homepage
       <!-- 🌟 ২. নতুন ক্যাটাগরি সেকশন (ব্যানারের নিচে আলাদাভাবে বসবে) 🌟 -->
       <section class="category-section">
         <div class="container">
-          
-          <!-- ক্যাটাগরির হেডিং এবং সাব-হেডিং -->
+
+          <!-- ক্যাটাগরির হেডিং এবং সাব-হেডিং (ডাইনামিক) -->
           <div class="category-heading">
-            <h2>আপনার জন্য সব ডিজিটাল প্রোডাক্ট এক জায়গায়।</h2>
-            <p>Digital E Product BD - Buy Premium Digital Products BD at Low Price in Bangladesh</p>
+              <h2 style="color: <?php echo get_theme_mod('hero_h2_color', '#333333'); ?> !important; font-size: <?php echo get_theme_mod('hero_font_size', '24px'); ?> !important;">
+                  <?php echo get_theme_mod('hero_main_title', 'আপনার জন্য সব ডিজিটাল প্রোডাক্ট এক জায়গায়।'); ?>
+              </h2>
+              <p style="color: <?php echo get_theme_mod('hero_p_color', '#666666'); ?> !important; font-size: <?php echo get_theme_mod('hero_p_font_size', '16px'); ?> !important;">
+                  <?php echo get_theme_mod('hero_sub_title', 'Digital E Product BD - Buy Premium Digital Products BD at Low Price in Bangladesh'); ?>
+              </p>
           </div>
 
           <!-- ক্যাটাগরি বক্সগুলোর লিস্ট -->
