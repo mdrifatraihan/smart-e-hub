@@ -51,23 +51,7 @@ function my_custom_theme_customizer( $wp_customize ) {
         'label'    => 'Menu Background Color',
         'section'  => 'theme_colors',
         'settings' => 'menu_bg_color',
-    ) ) );
-
-    function my_theme_customizer_logo( $wp_customize ) {
-    // লোগো সেটিংস
-    $wp_customize->add_setting( 'custom_logo_image', array(
-        'default'   => get_template_directory_uri() . '/assets/icons/lgo.png',
-        'transport' => 'refresh',
-    ) );
-
-    // লোগো কন্ট্রোল
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'custom_logo_image', array(
-        'label'    => 'Upload Logo',
-        'section'  => 'title_tagline', // এটি ওয়ার্ডপ্রেসের ডিফল্ট সেকশন
-        'settings' => 'custom_logo_image',
-    ) ) );
-    }
-    add_action( 'customize_register', 'my_theme_customizer_logo' );
+    ) ) );    
 
     // মেনু বারের লোগো সেটিংস
     $wp_customize->add_setting( 'menu_logo_image', array(
@@ -132,6 +116,27 @@ function my_custom_theme_customizer( $wp_customize ) {
         'type'     => 'number',
     ) );
 
+    // Homepage Banner Section
+    $wp_customize->add_section( 'banner_section', array(
+        'title'    => 'Homepage Banner',
+        'priority' => 30,
+    ) );
+
+    // ১. ব্যানার ইমেজ সেটিং
+    $wp_customize->add_setting( 'banner_image' );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'banner_image', array(
+        'label'    => 'Upload Banner Image',
+        'section'  => 'banner_section',
+    ) ) );
+
+    // ২. বাটন লিংক সেটিং
+    $wp_customize->add_setting( 'banner_button_link', array('default' => '#') );
+    $wp_customize->add_control( 'banner_button_link', array(
+        'label'    => 'Button Link URL',
+        'section'  => 'banner_section',
+        'type'     => 'url',
+    ) );
+
 }
 add_action( 'customize_register', 'my_custom_theme_customizer' );
-?>chact
+?>

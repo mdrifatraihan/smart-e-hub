@@ -5,7 +5,7 @@ Template Name: Custom Homepage
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>hi
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
@@ -155,7 +155,16 @@ Template Name: Custom Homepage
       <!-- ১. ব্যানার সেকশন -->
       <section class="hero-banner-section">
         <div class="container">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/bana/banar.png" alt="Best Digital Products Offer Banner" class="hero-banner-img">
+            <?php 
+            // কাস্টমাইজার থেকে ইমেজ ইউআরএল নেওয়া
+            $banner_image = get_theme_mod('banner_image'); 
+            
+            // যদি ইমেজ আপলোড করা থাকে তবে সেটি দেখাবে, না থাকলে ডিফল্ট ইমেজ দেখাবে
+            if ( !empty($banner_image) ) : ?>
+                <img src="<?php echo esc_url($banner_image); ?>" alt="Banner">
+            <?php else : ?>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/bana/banar.png" class="banner-radius" alt="Default Banner">
+            <?php endif; ?>
         </div>
       </section>
 

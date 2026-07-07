@@ -302,17 +302,20 @@ button {
 /* ==========================================================================
    HERO BANNER SECTION
    ========================================================================== */
+/* HERO BANNER SECTION */
 .hero-banner-section {
-  width: 100%;
-  padding: 20px 0; 
-  background: transparent; 
+    width: 100%;
+    padding: 20px 0;
+    border-radius: 20px;
+    overflow: hidden; /* এটিই মেইন কাজ করছে */
 }
 
-.hero-banner-img {
-  width: 100%;          
-  height: auto;         
-  display: block;
-  border-radius: 12px;  
+.hero-banner-section img {
+    border-radius: 20px !important;
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
 /* ==========================================================================

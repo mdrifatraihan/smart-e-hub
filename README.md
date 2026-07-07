@@ -8,14 +8,15 @@ A clean, premium static marketplace page inspired by the provided reference scre
 /
 ├── index.html
 ├── css/
-│   ├── style.css
-│   └── responsive.css
 ├── js/
 │   └── app.js
 ├── assets/
+│   ├── bana
 │   ├── images/
 │   └── icons/
 └── README.md
+├── style.css
+└── responsive.css
 ```
 
 ## Features
