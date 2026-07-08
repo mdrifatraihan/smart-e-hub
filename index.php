@@ -182,44 +182,29 @@ Template Name: Custom Homepage
               </p>
           </div>
 
-          <!-- ক্যাটাগরি বক্সগুলোর লিস্ট -->
-          <div class="category-grid">
-            
-            <!-- <div class="category-box">
-              <img src="assets/icons/vpn.png" alt="Premium VPN">
-              <span>Premium VPN</span>
-            </div> -->
+            <!-- ক্যাটাগরি বক্সগুলোর লিস্ট -->
+            <div class="category-grid">
+                <?php
+                for ($i = 1; $i <= 15; $i++) {
+                    $group = get_field('cat_' . $i);
 
-            <div class="category-box">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/icons/apps.png" alt="Software Apps">
-              <span>Software Apps</span>
+                    if ($group) :
+                        $icon       = $group['icon'];
+                        $title      = $group['title'];
+                        $box_color  = $group['box_color'];
+                        $text_color = $group['text_color'];
+                ?>
+                        <div class="category-box" style="background-color: <?php echo esc_attr($box_color); ?>;">
+                            <img src="<?php echo esc_url($icon); ?>" alt="<?php echo esc_attr($title); ?>">
+                            <span style="color: <?php echo esc_attr($text_color); ?>;">
+                                <?php echo esc_html($title); ?>
+                            </span>
+                        </div>
+                <?php
+                    endif;
+                }
+                ?>
             </div>
-
-            <!-- <div class="category-box">
-              <img src="assets/icons/marketing.png" alt="Marketing Tools">
-              <span>Marketing Tools</span>
-            </div> -->
-
-            <div class="category-box">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/icons/writing.png" alt="Writing Tools">
-              <span>Writing Tools</span>
-            </div>
-
-            <div class="category-box">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/icons/education.png" alt="Educational Tools">
-              <span>Educational Tools</span>
-            </div>
-
-            <div class="category-box">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/icons/graphics.png" alt="Graphics Tools">
-              <span>Graphics Tools</span>
-            </div>
-
-            <!-- <div class="category-box">
-              <img src="assets/icons/course.png" alt="Premium Course">
-              <span>Premium Course</span>
-            </div> -->
-
           </div>
         </div>
       </section>
