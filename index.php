@@ -213,11 +213,15 @@ Template Name: Custom Homepage
       <section class="product-section" id="products" aria-labelledby="products-heading">
         <div class="container">
           <div class="section-heading">
-            <div>
-              <p class="eyebrow">Featured catalog</p>
-              <h2 id="products-heading">Popular digital products</h2>
-            </div>
-            <p>Cleanly organized offers with transparent pricing and instant support.</p>
+              <div>
+                <p class="eyebrow">Featured catalog</p>
+                <h2 id="products-heading" style="color: <?php echo get_theme_mod('prod_heading_color', '#162033'); ?> !important; font-size: <?php echo get_theme_mod('prod_heading_size', '34'); ?>px !important;">
+                    <?php echo get_theme_mod('prod_heading_text', 'Popular digital products'); ?>
+                </h2>
+              </div>
+              <p style="color: <?php echo get_theme_mod('prod_desc_color', '#64748b'); ?> !important; font-size: <?php echo get_theme_mod('prod_desc_size', '16'); ?>px !important;">
+                  <?php echo get_theme_mod('prod_desc_text', 'Cleanly organized offers with transparent pricing and instant support.'); ?>
+              </p>
           </div>
 
           <div class="product-grid" data-product-grid>

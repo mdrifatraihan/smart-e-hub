@@ -179,6 +179,32 @@ function my_custom_theme_customizer( $wp_customize ) {
     $wp_customize->add_setting( 'hero_p_font_size', array('default' => '16px') );
     $wp_customize->add_control( 'hero_p_font_size', array('label' => 'Sub-heading Font Size', 'section' => 'hero_text_section', 'type' => 'text') );
 
+    // --- Product Section Texts ---
+    $wp_customize->add_section( 'product_section_texts', array(
+        'title'    => 'Product Section Texts',
+        'priority' => 40,
+    ) );
+
+    // ১. 'Popular digital products' হেডিংয়ের জন্য
+    $wp_customize->add_setting( 'prod_heading_text', array('default' => 'Popular digital products') );
+    $wp_customize->add_control( 'prod_heading_text', array('label' => 'Main Heading', 'section' => 'product_section_texts', 'type' => 'text') );
+
+    $wp_customize->add_setting( 'prod_heading_size', array('default' => '34') );
+    $wp_customize->add_control( 'prod_heading_size', array('label' => 'Heading Font Size (px)', 'section' => 'product_section_texts', 'type' => 'number') );
+
+    $wp_customize->add_setting( 'prod_heading_color', array('default' => '#162033') );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'prod_heading_color', array('label' => 'Heading Color', 'section' => 'product_section_texts') ) );
+
+    // ২. ডান পাশের ডেসক্রিপশন টেক্সটের জন্য
+    $wp_customize->add_setting( 'prod_desc_text', array('default' => 'Cleanly organized offers with transparent pricing and instant support.') );
+    $wp_customize->add_control( 'prod_desc_text', array('label' => 'Description Text', 'section' => 'product_section_texts', 'type' => 'textarea') );
+
+    $wp_customize->add_setting( 'prod_desc_size', array('default' => '16') );
+    $wp_customize->add_control( 'prod_desc_size', array('label' => 'Description Font Size (px)', 'section' => 'product_section_texts', 'type' => 'number') );
+
+    $wp_customize->add_setting( 'prod_desc_color', array('default' => '#64748b') );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'prod_desc_color', array('label' => 'Description Color', 'section' => 'product_section_texts') ) );
+
 }
 add_action( 'customize_register', 'my_custom_theme_customizer' );
 ?>
