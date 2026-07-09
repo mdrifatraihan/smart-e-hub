@@ -356,4 +356,39 @@ function calculate_product_price( $post_id ) {
         'discount_percent' => $discount_percent,
     );
 }
+
+// ============================================
+// PAGINATION REWRITE RULE SUPPORT
+// ============================================
+
+// পেজিনেশনের জন্য সরাসরি query var সাপোর্ট
+function direct_pagination_support() {
+    // $_GET['paged'] সরাসরি কাজ করতে দিন
+    if ( isset( $_GET['paged'] ) && is_numeric( $_GET['paged'] ) ) {
+        // WordPress এটি স্বয়ংক্রিয়ভাবে পরিচালনা করবে
+    }
+}
+add_action( 'init', 'direct_pagination_support' );
+
+// Homepage পেজিনেশন নিশ্চিত করুন
+function fix_homepage_pagination() {
+    // এটি নিশ্চিত করে যে homepage এ পেজিনেশন সঠিকভাবে কাজ করে
+    if ( is_front_page() && ! is_admin() ) {
+        global $paged;
+        if ( ! $paged ) {
+            if ( isset( $_GET['paged'] ) ) {
+                $paged = absint( $_GET['paged'] );
+            } else {
+                $paged = 1;
+            }
+        }
+    }
+}
+add_action( 'wp', 'fix_homepage_pagination' );
+
+// Flush rewrite rules on theme activation
+function flush_pagination_rules() {
+    flush_rewrite_rules();
+}
+add_action( 'after_switch_theme', 'flush_pagination_rules' );
 ?>

@@ -29,6 +29,28 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .pagination-nav ul {
+    gap: 6px;
+  }
+
+  .pagination-nav a,
+  .pagination-nav span.page-numbers {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .pagination-nav a.prev,
+  .pagination-nav a.next {
+    padding: 8px 12px;
+  }
+
+  .pagination-arrow {
+    font-size: 16px;
+    margin: 0 4px;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr 1fr;
     gap: 36px;
@@ -82,9 +104,26 @@
     min-height: auto;
   }
 
-  .pagination {
-    gap: 28px;
-    font-size: 1.15rem;
+  .pagination-nav ul {
+    gap: 4px;
+  }
+
+  .pagination-nav a,
+  .pagination-nav span.page-numbers {
+    min-height: 38px;
+    min-width: 38px;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  .pagination-nav a.prev,
+  .pagination-nav a.next {
+    padding: 6px 10px;
+  }
+
+  .pagination-arrow {
+    font-size: 14px;
+    margin: 0 3px;
   }
 
   .footer-grid {
@@ -114,6 +153,28 @@
 
   .product-content {
     padding-inline: 14px;
+  }
+
+  .pagination-nav ul {
+    gap: 3px;
+  }
+
+  .pagination-nav a,
+  .pagination-nav span.page-numbers {
+    min-height: 36px;
+    min-width: 36px;
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+
+  .pagination-nav a.prev,
+  .pagination-nav a.next {
+    padding: 4px 8px;
+  }
+
+  .pagination-arrow {
+    font-size: 12px;
+    margin: 0 2px;
   }
 }
 

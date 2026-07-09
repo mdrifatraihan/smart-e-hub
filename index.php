@@ -226,10 +226,14 @@ Template Name: Custom Homepage
 
           <div class="product-grid" data-product-grid>
             <?php
-            // WP_Query: সব প্রোডাক্ট পোস্ট নিয়ে আসছি
+            // পৃষ্ঠা নম্বর পাওয়া (WordPress এর অন্তর্নির্মিত ফাংশন)
+            $paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+
+            // WP_Query: প্রোডাক্ট পোস্ট নিয়ে আসছি (Pagination সহ)
             $args = array(
               'post_type'      => 'products',
-              'posts_per_page' => -1,
+              'posts_per_page' => 12,  // প্রতি পেজে ১২টি প্রোডাক্ট
+              'paged'          => $paged,  // বর্তমান পৃষ্ঠা
               'orderby'        => 'menu_order date',
               'order'          => 'ASC',
             );
@@ -278,19 +282,36 @@ Template Name: Custom Homepage
 
                 <?php
               endwhile;
-              wp_reset_postdata();
+            else:
+              ?>
+              <p class="empty-state">No matching products found.</p>
+              <?php
             endif;
             ?>
           </div>
 
-          <!-- ------------------------------------------------------------------------------- -->
+          <!-- Pagination নেভিগেশন -->
+          <?php
+          if ( $query->max_num_pages > 1 ) :
+            $pagination_args = array(
+              'base'      => home_url( '/?paged=%#%' ),
+              'format'    => '',
+              'current'   => $paged,
+              'total'     => $query->max_num_pages,
+              'prev_text' => '<span class="pagination-arrow">←</span> <span class="pagination-label">Previous</span>',
+              'next_text' => '<span class="pagination-label">Next</span> <span class="pagination-arrow">→</span>',
+              'type'      => 'list',
+            );
+            ?>
+            <nav class="pagination-nav" aria-label="Product pagination">
+              <?php echo wp_kses_post( paginate_links( $pagination_args ) ); ?>
+            </nav>
+            <?php
+          endif;
+          wp_reset_postdata();
+          ?>
 
           <p class="empty-state" data-empty-state hidden>No matching products found.</p>
-
-          <nav class="pagination" aria-label="Product pagination">
-            <a href="#" aria-label="Previous page">Previous</a>
-            <a href="#" aria-label="Next page">Next</a>
-          </nav>
         </div>
       </section>
     </main>
