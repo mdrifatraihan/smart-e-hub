@@ -225,186 +225,65 @@ Template Name: Custom Homepage
           </div>
 
           <div class="product-grid" data-product-grid>
-            <article class="product-card" data-title="Premium PC Software Combo Pack">
-              <a class="product-media" href="#" aria-label="View Premium PC Software Combo Pack">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-software.png" alt="Software combo product cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>Premium PC Software Combo Pack - Lifetime Essentials</h3>
-                <div class="price-row">
-                  <span class="old-price">1,820.00৳</span>
-                  <span class="new-price">299.00৳</span>
-                  <span class="discount">84% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
+            <?php
+            // WP_Query: সব প্রোডাক্ট পোস্ট নিয়ে আসছি
+            $args = array(
+              'post_type'      => 'products',
+              'posts_per_page' => -1,
+              'orderby'        => 'menu_order date',
+              'order'          => 'ASC',
+            );
+            $query = new WP_Query( $args );
 
-            <article class="product-card" data-title="ULLU Premium Adult Content Lifetime Access">
-              <a class="product-media" href="#" aria-label="View ULLU Premium Adult Content">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-streaming.svg" alt="Streaming subscription product cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>ULLU Premium Adult 18+ Content - Lifetime Premium Access</h3>
-                <div class="price-row">
-                  <span class="old-price">1,250.00৳</span>
-                  <span class="new-price">120.00৳</span>
-                  <span class="discount">90% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
+            if ( $query->have_posts() ) :
+              while ( $query->have_posts() ) :
+                $query->the_post();
 
-            <article class="product-card" data-title="Premium Subscriptions Apps Combo">
-              <a class="product-media" href="#" aria-label="View Premium Subscriptions Apps Combo">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-apps.svg" alt="Premium apps subscription product cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>9+ Premium Subscriptions Apps Combo - Lifetime Delivery</h3>
-                <div class="price-row">
-                  <span class="old-price">1,250.00৳</span>
-                  <span class="new-price">150.00৳</span>
-                  <span class="discount">88% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
+                // ACF ফিল্ড থেকে ডেটা নিচ্ছি
+                $product_image  = get_field( 'product_image' );
+                $product_name   = get_field( 'product_name' );
+                $discount_type  = get_field( 'discount_type' );
+                $button_label   = get_field( 'button_label' ) ?: 'Order Now';
+                $button_bg      = get_field( 'button_bg_color' ) ?: '#0070f3';
+                $button_text    = get_field( 'button_text_color' ) ?: '#ffffff';
 
-            <article class="product-card" data-title="Netflix Premium Content Mobile Smart TV">
-              <a class="product-media" href="#" aria-label="View Netflix Premium Content">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-netflix.svg" alt="Netflix-style premium content cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>Netflix Premium Content - Mobile and Smart TV Access</h3>
-                <div class="price-row">
-                  <span class="old-price">1,250.00৳</span>
-                  <span class="new-price">199.00৳</span>
-                  <span class="discount">84% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
+                // প্রাইস ক্যালকুলেশন করছি
+                $prices = calculate_product_price( get_the_ID() );
+                $original_price = $prices['original_price'];
+                $new_price = $prices['new_price'];
+                $discount_percent = $prices['discount_percent'];
 
-            <article class="product-card" data-title="Visa Processing Course">
-              <a class="product-media" href="#" aria-label="View Visa Processing Course">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-course.svg" alt="Visa processing course cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>Visa Processing Course - Learn Client Service Workflow</h3>
-                <div class="price-row">
-                  <span class="old-price">20,000.00৳</span>
-                  <span class="new-price">199.00৳</span>
-                  <span class="discount">99% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
+                // ইমেজ URL নিচ্ছি
+                $image_url = $product_image ? $product_image['url'] : get_template_directory_uri() . '/assets/images/placeholder.png';
+                ?>
 
-            <article class="product-card" data-title="CamScanner Premium Mobile">
-              <a class="product-media" href="#" aria-label="View CamScanner Premium">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-scanner.svg" alt="Scanner app premium product cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>CamScanner Premium Mobile - Premium Features Access</h3>
-                <div class="price-row">
-                  <span class="old-price">1,250.00৳</span>
-                  <span class="new-price">99.00৳</span>
-                  <span class="discount">92% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
+                <article class="product-card" data-title="<?php echo esc_attr( $product_name ); ?>">
+                  <a class="product-media" href="<?php the_permalink(); ?>" aria-label="View <?php echo esc_attr( $product_name ); ?>">
+                    <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product_name ); ?>" loading="lazy" />
+                  </a>
+                  <div class="product-content">
+                    <h3><?php echo wp_kses_post( get_the_title() ); ?></h3>
+                    <div class="price-row">
+                      <span class="old-price"><?php echo number_format( $original_price, 2, '.', ',' ); ?>৳</span>
+                      <span class="new-price"><?php echo number_format( $new_price, 2, '.', ',' ); ?>৳</span>
+                      <?php if ( $discount_type !== 'none' ) : ?>
+                        <span class="discount"><?php echo intval( $discount_percent ); ?>% off</span>
+                      <?php endif; ?>
+                    </div>
+                    <button class="button order-button" type="button" style="background-color: <?php echo esc_attr( $button_bg ); ?>; color: <?php echo esc_attr( $button_text ); ?>;">
+                      <?php echo esc_html( $button_label ); ?>
+                    </button>
+                  </div>
+                </article>
 
-            <article class="product-card" data-title="Lightroom Premium Mobile">
-              <a class="product-media" href="#" aria-label="View Lightroom Premium">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-lightroom.svg" alt="Photo editing premium product cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>Lightroom Premium Mobile - Creative Editing Features</h3>
-                <div class="price-row">
-                  <span class="old-price">1,250.00৳</span>
-                  <span class="new-price">99.00৳</span>
-                  <span class="discount">92% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
-
-            <article class="product-card" data-title="CapCut VIP Advanced Editing">
-              <a class="product-media" href="#" aria-label="View CapCut VIP">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-video.svg" alt="Video editing VIP product cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>CapCut VIP - Advanced Editing, Effects, and Templates</h3>
-                <div class="price-row">
-                  <span class="old-price">12,200.00৳</span>
-                  <span class="new-price">199.00৳</span>
-                  <span class="discount">98% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
-
-            <article class="product-card" data-title="Twenty Premium App Collection">
-              <a class="product-media" href="#" aria-label="View Premium App Collection">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-bundle.svg" alt="Premium app bundle product cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>20+ Premium App Collection - Productivity Mega Bundle</h3>
-                <div class="price-row">
-                  <span class="old-price">2,550.00৳</span>
-                  <span class="new-price">199.00৳</span>
-                  <span class="discount">92% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
-
-            <article class="product-card" data-title="Premium Method Package">
-              <a class="product-media" href="#" aria-label="View Premium Method Package">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-method.svg" alt="Premium method package cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>Premium Method Package - Digital Income Resource Pack</h3>
-                <div class="price-row">
-                  <span class="old-price">5,200.00৳</span>
-                  <span class="new-price">299.00৳</span>
-                  <span class="discount">94% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
-
-            <article class="product-card" data-title="Islamic Bangla Books Collection">
-              <a class="product-media" href="#" aria-label="View Islamic Bangla Books Collection">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-books.svg" alt="Islamic books PDF collection cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>850+ Islamic Bangla Books Collection - PDF Library</h3>
-                <div class="price-row">
-                  <span class="old-price">1,250.00৳</span>
-                  <span class="new-price">10.00৳</span>
-                  <span class="discount">99% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
-
-            <article class="product-card" data-title="InShot Pro Mobile">
-              <a class="product-media" href="#" aria-label="View InShot Pro Mobile">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-inshot.svg" alt="Mobile video editor product cover" loading="lazy" />
-              </a>
-              <div class="product-content">
-                <h3>InShot Pro Mobile - Premium Features Unlocked Access</h3>
-                <div class="price-row">
-                  <span class="old-price">1,250.00৳</span>
-                  <span class="new-price">99.00৳</span>
-                  <span class="discount">92% off</span>
-                </div>
-                <button class="button order-button" type="button">Order Now</button>
-              </div>
-            </article>
+                <?php
+              endwhile;
+              wp_reset_postdata();
+            endif;
+            ?>
           </div>
+
+          <!-- ------------------------------------------------------------------------------- -->
 
           <p class="empty-state" data-empty-state hidden>No matching products found.</p>
 
