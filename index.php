@@ -227,16 +227,23 @@ Template Name: Custom Homepage
           <div class="product-grid" data-product-grid>
             <?php
             // পৃষ্ঠা নম্বর পাওয়া (WordPress এর অন্তর্নির্মিত ফাংশন)
-            $paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+           $paged = max(
+                      1,
+                      get_query_var('paged'),
+                      get_query_var('page'),
+                      isset($_GET['paged']) ? intval($_GET['paged']) : 1
+            );
 
             // WP_Query: প্রোডাক্ট পোস্ট নিয়ে আসছি (Pagination সহ)
-            $args = array(
-              'post_type'      => 'products',
-              'posts_per_page' => 12,  // প্রতি পেজে ১২টি প্রোডাক্ট
-              'paged'          => $paged,  // বর্তমান পৃষ্ঠা
-              'orderby'        => 'menu_order date',
-              'order'          => 'ASC',
-            );
+           $args = array(
+                  'post_type'      => 'products',
+                  'posts_per_page' => 12,
+                  'paged'          => $paged,
+                    'orderby'        => array(
+                  'menu_order' => 'ASC',
+                   'date'       => 'ASC'
+                   ),
+                  );
             $query = new WP_Query( $args );
 
             if ( $query->have_posts() ) :
@@ -292,24 +299,32 @@ Template Name: Custom Homepage
 
           <!-- Pagination নেভিগেশন -->
           <?php
-          if ( $query->max_num_pages > 1 ) :
-            $pagination_args = array(
-              'base'      => home_url( '/?paged=%#%' ),
-              'format'    => '',
-              'current'   => $paged,
-              'total'     => $query->max_num_pages,
-              'prev_text' => '<span class="pagination-arrow">←</span> <span class="pagination-label">Previous</span>',
-              'next_text' => '<span class="pagination-label">Next</span> <span class="pagination-arrow">→</span>',
-              'type'      => 'list',
-            );
-            ?>
-            <nav class="pagination-nav" aria-label="Product pagination">
-              <?php echo wp_kses_post( paginate_links( $pagination_args ) ); ?>
-            </nav>
-            <?php
-          endif;
-          wp_reset_postdata();
+      if ( $query->max_num_pages > 1 ) :
+
+          $big = 999999999;
+
           ?>
+          <nav class="pagination-nav" aria-label="Product pagination">
+              <?php
+             echo wp_kses_post(
+                  paginate_links( array(
+                      'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                      'format'    => '',
+                     'current'   => max( 1, $paged ),
+                     'total'     => $query->max_num_pages,
+                      'prev_text' => '<span class="pagination-arrow">←</span> <span class="pagination-label">Previous</span>',
+                      'next_text' => '<span class="pagination-label">Next</span> <span class="pagination-arrow">→</span>',
+                      'type'      => 'list',
+                  ) )
+              );
+             ?>
+          </nav>
+          <?php
+
+      endif;
+
+wp_reset_postdata();
+?>
 
           <p class="empty-state" data-empty-state hidden>No matching products found.</p>
         </div>
